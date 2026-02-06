@@ -34,6 +34,18 @@ FEATURE          = <YOUR_LABEL_ID>
 
 # User (for auto-assignment)
 DEFAULT_ASSIGNEE = <YOUR_USER_ID>
+
+# Build/Verification Command (examples for different stacks)
+# TypeScript:  npx tsc --noEmit
+# Python:      pytest --collect-only && python -m py_compile src/**/*.py
+# Go:          go build ./...
+# Rust:        cargo check
+# Ruby:        bundle exec rake
+# Generic:     make check
+BUILD_COMMAND    = <YOUR_BUILD_COMMAND>
+
+# Plan file location
+PLAN_DIRECTORY   = docs/plans
 ```
 
 ---
@@ -204,21 +216,15 @@ DEFAULT_ASSIGNEE = <YOUR_USER_ID>
    - Two-stage review (spec compliance → code quality)
    - Each task committed individually with message format: `feat: description (XXX-123)`
 
-2. **After all tasks complete**, run full verification:
-   - TypeScript: `npx tsc --noEmit`
-   - Lint: `npm run lint` (if configured)
+2. **After all tasks complete**, run full verification using `BUILD_COMMAND` (see Configuration below)
 
 ---
 
 ## Phase 5: Verify Build
 
-**HARD GATE** - the app MUST build successfully before proceeding to Phase 6. You CANNOT move to the next ticket or submit for review if the app does not build. This is non-negotiable.
+**HARD GATE** - the project MUST build/verify successfully before proceeding to Phase 6. You CANNOT move to the next ticket or submit for review if verification fails. This is non-negotiable.
 
-1. **Run your project's build check:**
-   ```
-   npx tsc --noEmit
-   ```
-   > **CUSTOMIZE:** Replace with your project's build verification command
+1. **Run the project's build/verification command** (defined in `BUILD_COMMAND` below)
 
 2. If the build check fails:
    - Read the error output

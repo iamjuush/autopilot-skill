@@ -5,7 +5,7 @@ An automated end-to-end ticket processing loop for Claude Code. Picks tickets fr
 ## What's Included
 
 ```
-autopilot-package/
+autopilot-skill/
 ├── README.md                    # This file
 ├── .claude/
 │   └── commands/
@@ -105,18 +105,25 @@ mcp__linear-server__get_user with query: "me"
 
 ### Customize for Your Project
 
-Update these sections in `autopilot.md`:
+Update these in the Constants section of `autopilot.md`:
 
-1. **Plan file path** (Phase 3): Change `docs/plans/` to your preferred location
-2. **Build verification** (Phase 5): Change `npx tsc --noEmit` to your project's build command
-3. **Commit message format** (Phase 4): Adjust `feat: description (LYN-XX)` to your convention
+1. **BUILD_COMMAND**: Your project's verification command. Examples:
+   - TypeScript: `npx tsc --noEmit`
+   - Python: `pytest --collect-only`
+   - Go: `go build ./...`
+   - Rust: `cargo check`
+   - Ruby: `bundle exec rake`
+
+2. **PLAN_DIRECTORY**: Where implementation plans are saved (default: `docs/plans`)
+
+3. **Commit message format**: Adjust `feat: description (XXX-123)` to your convention
 
 ## Usage
 
 ### Single Ticket Mode
 ```bash
 # Process a specific ticket
-./scripts/autopilot.sh LYN-123
+./scripts/autopilot.sh PROJ-123
 ```
 
 ### Continuous Mode
@@ -130,8 +137,8 @@ Update these sections in `autopilot.md`:
 
 ### From Claude Code
 ```
-/autopilot           # Auto-select next ticket
-/autopilot LYN-123   # Target specific ticket
+/autopilot            # Auto-select next ticket
+/autopilot PROJ-123   # Target specific ticket
 ```
 
 ## How It Works
@@ -140,7 +147,7 @@ Update these sections in `autopilot.md`:
 2. **Brainstorm**: Researches the ticket, posts a design document with questions
 3. **Planning**: Creates a detailed implementation plan in markdown
 4. **Implementation**: Executes the plan using subagent-driven development
-5. **Verification**: Runs build checks (TypeScript, etc.)
+5. **Verification**: Runs your configured build/test command
 6. **Review**: Moves ticket to In Review with a summary comment
 
 ## Logs
