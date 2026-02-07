@@ -54,8 +54,8 @@ PLAN_DIRECTORY   = docs/plans
 
 ### If a ticket identifier is provided (e.g. `XXX-123`):
 
-1. Fetch the ticket with `mcp__linear-server__get_issue`
-2. Read all comments with `mcp__linear-server__list_comments`
+1. Fetch the ticket with `mcp__linear__get_issue`
+2. Read all comments with `mcp__linear__list_comments`
 3. Check the ticket's current state:
    - If **Brainstorm** → go to Phase 2 Resume
    - If **In Progress** → go to Phase 3
@@ -67,7 +67,7 @@ PLAN_DIRECTORY   = docs/plans
 
 1. **Check In Review column first** - fetch tickets in **In Review** state:
    ```
-   mcp__linear-server__list_issues with:
+   mcp__linear__list_issues with:
      team: "<YOUR_TEAM_NAME>"
      state: IN_REVIEW
      limit: 10
@@ -76,7 +76,7 @@ PLAN_DIRECTORY   = docs/plans
 
 2. **Check Brainstorm column next** - fetch tickets in **Brainstorm** state:
    ```
-   mcp__linear-server__list_issues with:
+   mcp__linear__list_issues with:
      team: "<YOUR_TEAM_NAME>"
      state: BRAINSTORM_STATE_ID
      limit: 10
@@ -85,7 +85,7 @@ PLAN_DIRECTORY   = docs/plans
 
 3. **If nothing ready above**, fetch from **Todo**:
    ```
-   mcp__linear-server__list_issues with:
+   mcp__linear__list_issues with:
      team: "<YOUR_TEAM_NAME>"
      state: "Todo"
      limit: 10
@@ -111,7 +111,7 @@ PLAN_DIRECTORY   = docs/plans
 
 ### Fresh (ticket has no brainstorm comment yet):
 
-1. **Move ticket** to Brainstorm state using `mcp__linear-server__update_issue`
+1. **Move ticket** to Brainstorm state using `mcp__linear__update_issue`
 
 2. **Gather context using the brainstorming skill's understanding phase:**
    - Check current project state (files, docs, recent commits) as the skill directs
@@ -153,7 +153,7 @@ PLAN_DIRECTORY   = docs/plans
    2. ...
    ```
 
-4. **Post to ticket** - add the brainstorm analysis as a comment using `mcp__linear-server__create_comment`
+4. **Post to ticket** - add the brainstorm analysis as a comment using `mcp__linear__create_comment`
 
 5. **Decision point:**
    - If there are **zero** `INPUT NEEDED` items and **zero** open questions → proceed directly to Phase 3
@@ -169,7 +169,7 @@ PLAN_DIRECTORY   = docs/plans
 
 ### Resume (ticket is in Brainstorm state, brainstorm comment exists):
 
-1. Fetch all comments with `mcp__linear-server__list_comments`
+1. Fetch all comments with `mcp__linear__list_comments`
 2. Find the brainstorm comment (starts with `## Brainstorm:`)
 3. Look for reply comments posted **after** the brainstorm comment
 4. Check if all `INPUT NEEDED` items and open questions have answers:
@@ -251,7 +251,7 @@ PLAN_DIRECTORY   = docs/plans
 
 ## Phase 6: Submit for Review
 
-1. **Move ticket** to In Review state using `mcp__linear-server__update_issue`
+1. **Move ticket** to In Review state using `mcp__linear__update_issue`
 
 2. **Post summary comment** on the ticket:
    ```markdown
@@ -327,7 +327,7 @@ Triggered when a ticket in **In Review** has new comments after the `## Implemen
    ### Major rework / new scope → Create follow-up ticket
    - Post comment on the current ticket explaining that the feedback requires significant new work
    - **Leave ticket in In Review** — only a human can move it to Done
-   - Create a **new ticket** using `mcp__linear-server__create_issue`:
+   - Create a **new ticket** using `mcp__linear__create_issue`:
      ```
      Title: "[Follow-up] XXX-123: [description of new scope]"
      Description: Summary of the review feedback + what needs to change

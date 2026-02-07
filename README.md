@@ -34,18 +34,15 @@ Autopilot uses Linear for ticket management. Add the Linear MCP server to your C
 ```json
 {
   "mcpServers": {
-    "linear-server": {
+    "linear": {
       "command": "npx",
-      "args": ["-y", "@anthropic/linear-mcp-server"],
-      "env": {
-        "LINEAR_API_KEY": "your-linear-api-key"
-      }
+      "args": ["-y", "@anthropic/linear-mcp-server"]
     }
   }
 }
 ```
 
-Get your Linear API key from: Settings → API → Personal API keys
+On first use, the server will open a browser window for OAuth login to your Linear account. No API key needed.
 
 ### 3. Linear Workflow States
 
@@ -94,13 +91,13 @@ YOUR_USER_ID     = <your-linear-user-id>
 Use the Linear MCP in Claude Code:
 ```
 # Get team ID
-mcp__linear-server__list_teams
+mcp__linear__list_teams
 
 # Get workflow states
-mcp__linear-server__list_issue_statuses with team: "YourTeam"
+mcp__linear__list_issue_statuses with team: "YourTeam"
 
 # Get your user ID
-mcp__linear-server__get_user with query: "me"
+mcp__linear__get_user with query: "me"
 ```
 
 ### Customize for Your Project
